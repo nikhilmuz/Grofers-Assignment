@@ -37,25 +37,23 @@ function set_key($key,$value)
 {
 	dbconn();
 	global $conn;
+    $count_sql="SELECT count(".DB_KEYNAME.") FROM '".DB_TNAME."'' WHERE '".DB_KEYNAME."'='".$key."'";
 	$insert_sql="insert into '".DB_TNAME."' ('".DB_KEYNAME."','".DB_VALNAME."')values ('".$key."','".$value."')";
 	$update_sql="UPDATE '".DB_TNAME."' SET '".DB_VALNAME."'='".$value."' WHERE '".DB_KEYNAME."'='".$key."'";
-	try {
-        $conn->query($insert_sql);
+    $row = $conn->query($count_sql);
+	if (($row->fetch_assoc())['count('.DB_KEYNAME.')']==1){
+        $conn->query($update_sql);
     }
-    catch(Exception $e) {
-	    try{
-            $conn->query($update_sql);
-        }
-        catch (Exception $e){
-            die('{error:"1",result:""}');
-        }
+	else{
+        $conn->query($insert_sql);
     }
 	dbdisconn();
 	echo ('{error:"1",result:"'.$value.'"}');
-	};
+};
+
 function get_key($key)
 {
-    $sql="SELECT '".DB_VALNAME."'' FROM '".DB_TNAME."'' WHERE '".DB_KEYNAME."'='".$key."'";
+    $sql="SELECT '".DB_VALNAME."' FROM '".DB_TNAME."'' WHERE '".DB_KEYNAME."'='".$key."'";
 	dbconn();
 	global $conn;
 	$row = $conn->query($sql);
