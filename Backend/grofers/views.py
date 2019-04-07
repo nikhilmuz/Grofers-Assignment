@@ -48,3 +48,38 @@ class GetValueView(APIView):
                 "error",
                 status=status.HTTP_404_NOT_FOUND
             )
+
+
+class WatchView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        time = request.POST['time']
+        store = Store.objects.filter(updated__gt=time).order_by('updated')
+        count = len(store)
+        dict=[]
+        last = ""
+        for i in range(count):
+            dict.append({'key': store[i].key, 'value': store[i].value, 'updated': store[i].updated})
+            last = store[i].updated
+        if count:
+            return Response(
+                {'count': count, 'last': last, 'result': dict},
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                "error",
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class TimeView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, **kwargs):
+        import datetime
+        return Response(
+            {'time': datetime.datetime.utcnow().isoformat()},
+            status=status.HTTP_200_OK
+        )

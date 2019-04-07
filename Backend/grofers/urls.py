@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^update/$', UpdateValueView.as_view(), name='Update Key'),
     url(r'^get/$', GetValueView.as_view(), name='Get Key'),
+    url(r'^watch/$', WatchView.as_view(), name='Watch'),
+    url(r'^time/$', TimeView.as_view(), name='Get Time'),
 ]
