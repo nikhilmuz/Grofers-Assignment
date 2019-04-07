@@ -17,7 +17,7 @@ This will enable the API at the port 8000 of the host.<br/>
 Install the python from [Python.org](https://python.org)<br/>
 Navigate to frontend Repository and install dependency using the following command
 ```
-cd ...
+cd ..
 cd Frontend-CLI
 pip install -r requirements.txt
 ```
