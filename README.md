@@ -15,7 +15,7 @@ sudo docker run --name grofers-api -p 8000:8000 -d grofers
 ```
 This will enable the API at the port 8000 of the host.<br/>
 Install the python from [Python.org](https://python.org)<br/>
-Navigate to frontend Repository and install dependency using the following command
+Navigate to frontend folder and install dependency using the following command
 ```
 cd ..
 cd Frontend-CLI
